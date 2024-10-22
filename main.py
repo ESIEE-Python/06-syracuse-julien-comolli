@@ -1,11 +1,15 @@
-#### Fonctions secondaires
-
+"""
+Module suite de syracuse.
+"""
 
 # imports
 from plotly.graph_objects import Scatter, Figure
 
 ### NE PAS MODIFIER ###
 def syr_plot(lsyr):
+    """
+    Dessine le plot.
+    """
     title = "Syracuse" + " (n = " + str(lsyr[0]) + " )"
     fig = Figure({  'layout':   { 'title': {'text': title},
                                 'xaxis': {'title': {'text':"x"}},
@@ -19,12 +23,13 @@ def syr_plot(lsyr):
     fig.add_trace(t)
     fig.show()
     # fig.write_html('fig.html', include_plotlyjs='cdn')
-    return None
+    # return None
 #######################
+
 
 def syracuse_l(n):
     """retourne la suite de Syracuse de source n
-
+l
     Args:
         n (int): la source de la suite
 
@@ -32,8 +37,14 @@ def syracuse_l(n):
         list: la suite de Syracuse de source n
     """
 
-    # votre code ici 
     l = [ ]
+    l.append(n)
+    while n != 1:
+        # Transformation des conditions en arithmétique
+        # pour éviter d'utiliser des if (plus rapide)
+        n = n % 2 * (3 * n + 1) + (1 - n % 2) * n / 2
+        l.append(int(n))
+
     return l
 
 def temps_de_vol(l):
@@ -45,10 +56,8 @@ def temps_de_vol(l):
     Returns:
         int: le temps de vol
     """
-    
-    # votre code ici
 
-    n = 0
+    n = len(l)
     return n
 
 def temps_de_vol_en_altitude(l):
@@ -61,9 +70,11 @@ def temps_de_vol_en_altitude(l):
         int: le temps de vol en altitude
     """
 
-    # votre code ici
-
-    n = 0
+    for i in range(len(l)):
+        if l[i+1] < l[0]:
+            # Ici c'est le rang pas l'indice du tableau
+            n = i + 1
+            break
     return n
 
 
@@ -76,10 +87,8 @@ def altitude_maximale(l):
     Returns:
         int: l'altitude maximale
     """
-    
-    # votre code ici
-    
-    n = 0
+
+    n = max(l)
     return n
 
 
@@ -87,9 +96,13 @@ def altitude_maximale(l):
 
 
 def main():
+    """
+    Fonctione principale.
+    """
 
     # vos appels à la fonction secondaire ici
-    lsyr = syracuse_l(15)
+    lsyr = syracuse_l(6)
+    print(lsyr)
     syr_plot(lsyr)
     print(temps_de_vol(lsyr))
     print(temps_de_vol_en_altitude(lsyr))
